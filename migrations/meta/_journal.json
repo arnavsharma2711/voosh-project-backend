@@ -1,1 +1,13 @@
-{"version":"5","dialect":"pg","entries":[]}
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1712323201331,
+      "tag": "0000_flippant_dreaming_celestial",
+      "breakpoints": true
+    }
+  ]
+}
