@@ -5,6 +5,7 @@ import build_response from './response/MessageResponse';
 
 interface UserRequest extends Request {
   user?: any;
+  role?: string;
 }
 // eslint-disable-next-line no-unused-vars
 type ControllerFunction = (req: UserRequest, res: Response, next: NextFunction) => Promise<void>;

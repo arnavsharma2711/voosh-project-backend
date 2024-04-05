@@ -15,3 +15,15 @@ export const passwordSchema = z
   .refine((value: string) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value), {
     message: 'Password must contain at least one special character.',
   });
+
+export const userInfoSchema = z.object({
+  id: z.number(),
+  email: z.string().email(),
+  display_name: z.string(),
+  username: z.string(),
+  first_name: z.string().optional().nullable(),
+  last_name: z.string().optional().nullable(),
+  phone_number: z.string().optional().nullable(),
+  profile_picture: z.string().optional().nullable(),
+  bio: z.string().optional().nullable(),
+});

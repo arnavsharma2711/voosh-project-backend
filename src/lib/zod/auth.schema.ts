@@ -26,16 +26,3 @@ export const authenticateUserSchema = z.object({
     invalid_type_error: 'Password must be a text.',
   }),
 });
-
-export const userInfoSchema = z.object({
-  id: z.number(),
-  email: z.string().email(),
-  display_name: z.string(),
-  username: z.string(),
-  first_name: z.string().optional().nullable(),
-  last_name: z.string().optional().nullable(),
-  phone_number: z.string().optional().nullable(),
-  profile_picture: z.string().optional().nullable(),
-  bio: z.string().optional().nullable(),
-  status: z.union([z.literal('public'), z.literal('private')]),
-});

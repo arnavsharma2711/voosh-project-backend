@@ -1,5 +1,5 @@
 import { and, eq, or } from 'drizzle-orm';
-import { users as User, userProvider } from '../lib/db/schema';
+import { users as User, userProvider, userRoles } from '../lib/db/schema';
 import databaseInstance from '../lib/db';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -159,4 +159,19 @@ export const updateUserProfilePicture = async (userId: number, profile_picture: 
   console.log(profile_picture);
   await databaseInstance.update(User).set({ profile_picture: profile_picture }).where(eq(User.id, userId)).returning();
   return true;
+};
+
+export const userRole = async (userId: number) => {
+  const role = await databaseInstance.select().from(userRoles).where(eq(userRoles.user_id, userId)).limit(1);
+
+  return role[0]?.role;
+};
+
+export const allUserList = async (limit: number = 10, offset: number = 0, user_status: 'public' | 'private' | 'all') => {
+  if (user_status === 'all') {
+    const userList = await databaseInstance.select().from(User).limit(limit).offset(offset);
+    return userList;
+  }
+  const userList = await databaseInstance.select().from(User).limit(limit).offset(offset).where(eq(User.status, user_status));
+  return userList;
 };

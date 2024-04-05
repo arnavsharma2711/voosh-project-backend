@@ -1,7 +1,7 @@
 import { controllerWrapper } from '../../lib/controllerWrapper';
 import build_response from '../../lib/response/MessageResponse';
 import { emailUpdateSchema, passwordUpdateSchema, statusUpdateSchema, updateUserInfoSchema, usernameUpdateSchema } from '../../lib/zod/user.schema';
-import { userInfoSchema } from '../../lib/zod/auth.schema';
+import { userInfoSchema } from '../../lib/zod/common.schema';
 import {
   updateUserInfo,
   patchUserPassword,

@@ -3,7 +3,7 @@ import { Request } from 'express';
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import { generateUserToken } from '../../../models/user.model';
-import { userInfoSchema } from '../../../lib/zod/auth.schema';
+import { userInfoSchema } from '../../../lib/zod/common.schema';
 import { COOKIE_SETTINGS, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../../../constants';
 import build_response from '../../../lib/response/MessageResponse';
 import { findUserProvider } from '../../../services/user.service';
