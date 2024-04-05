@@ -1,8 +1,9 @@
 import build_response from '../../lib/response/MessageResponse';
 import { createNewUser, validateUserCredentials } from '../../services/user.service';
 import { COOKIE_SETTINGS } from '../../constants';
-import { authenticateUserSchema, registerNewUserSchema, userInfoSchema } from '../../lib/zod/auth.schema';
+import { authenticateUserSchema, registerNewUserSchema } from '../../lib/zod/auth.schema';
 import { controllerWrapper } from '../../lib/controllerWrapper';
+import { userInfoSchema } from '../../lib/zod/common.schema';
 
 // POST /api/v1/auth/register
 export const registerNewUser = controllerWrapper(async (req, res) => {

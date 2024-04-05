@@ -3,7 +3,7 @@ import { Request } from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 import { generateUserToken } from '../../../models/user.model';
-import { userInfoSchema } from '../../../lib/zod/auth.schema';
+import { userInfoSchema } from '../../../lib/zod/common.schema';
 import { COOKIE_SETTINGS, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../../../constants';
 import build_response from '../../../lib/response/MessageResponse';
 import { findUserProvider } from '../../../services/user.service';
