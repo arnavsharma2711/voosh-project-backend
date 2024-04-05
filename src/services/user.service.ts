@@ -25,3 +25,8 @@ export const findUserProvider = async (providerDetails: any) => {
   console.log(userFromProvider);
   return userFromProvider;
 };
+
+export const findUserById = async (userId: string) => {
+  const user = await findUser(userId, 'id');
+  return user;
+};
