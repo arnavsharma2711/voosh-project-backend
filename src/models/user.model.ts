@@ -154,3 +154,9 @@ export const updateUserStatus = async (userId: number, status: 'public' | 'priva
   await databaseInstance.update(User).set({ status: status }).where(eq(User.id, userId)).returning();
   return true;
 };
+
+export const updateUserProfilePicture = async (userId: number, profile_picture: string) => {
+  console.log(profile_picture);
+  await databaseInstance.update(User).set({ profile_picture: profile_picture }).where(eq(User.id, userId)).returning();
+  return true;
+};

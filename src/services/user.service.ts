@@ -7,8 +7,10 @@ import {
   updateUser,
   updateUserMail,
   updateUserPassword,
+  updateUserStatus,
   updateUserUsername,
   validUserAndPassword,
+  updateUserProfilePicture,
 } from '../models/user.model';
 
 export const createNewUser = async (display_name: string, email: string, password: string) => {
@@ -61,7 +63,13 @@ export const patchUserUsername = async (userId: number, newUsername: string) => 
   return updatedUserWithNewUsername;
 };
 
-export const patchUserStatus = async (userId: number, newStatus: string) => {
-  const updatedUserWithNewStatus = await updateUser(userId, { status: newStatus });
+export const patchUserStatus = async (userId: number, newStatus: 'public' | 'private') => {
+  const updatedUserWithNewStatus = await updateUserStatus(userId, newStatus);
   return updatedUserWithNewStatus;
+};
+
+export const patchUserProfilePicture = async (userId: number, newProfilePicture: string) => {
+  console.log(newProfilePicture);
+  const updatedUserWithNewProfilePicture = await updateUserProfilePicture(userId, newProfilePicture);
+  return updatedUserWithNewProfilePicture;
 };

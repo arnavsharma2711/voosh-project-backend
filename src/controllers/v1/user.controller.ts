@@ -2,7 +2,14 @@ import { controllerWrapper } from '../../lib/controllerWrapper';
 import build_response from '../../lib/response/MessageResponse';
 import { emailUpdateSchema, passwordUpdateSchema, statusUpdateSchema, updateUserInfoSchema, usernameUpdateSchema } from '../../lib/zod/user.schema';
 import { userInfoSchema } from '../../lib/zod/auth.schema';
-import { updateUserInfo, patchUserPassword, patchUserEmail, patchUserUsername, patchUserStatus } from '../../services/user.service';
+import {
+  updateUserInfo,
+  patchUserPassword,
+  patchUserEmail,
+  patchUserUsername,
+  patchUserStatus,
+  patchUserProfilePicture,
+} from '../../services/user.service';
 import { CustomError } from '../../lib/error/custom.error';
 
 //GET /api/v1/user/
@@ -80,4 +87,10 @@ export const updateUserStatus = controllerWrapper(async (req, res) => {
   if (!statusUpdated) throw new CustomError(400, 'Validation Error', 'Status update failed!');
 
   res.status(200).json(build_response(true, 'Status updated successfully!'));
+});
+
+export const updateUserProfilePicture = controllerWrapper(async (req, res) => {
+  console.log(req.file);
+  if (req.file) await patchUserProfilePicture(req.user.id, req.file.path);
+  res.status(200).json(build_response(true, 'Profile picture updated successfully!'));
 });
