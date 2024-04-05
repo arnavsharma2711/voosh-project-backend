@@ -51,3 +51,13 @@ export const createUser = async (display_name: string, email: string, password: 
 
   return newUser[0];
 };
+
+export const validUserAndPassword = async (identifier: string, identifierType: string, password: string) => {
+  const user = await findUser(identifier, identifierType);
+  if (!user) throw new CustomError(404, 'Authentication Error', 'Invalid credentials!');
+
+  const passwordMatch = user.encrypted_password ? bcrypt.compareSync(password, user.encrypted_password) : false;
+  if (!passwordMatch) throw new CustomError(401, 'Authentication Error', 'Invalid credentials!');
+
+  return user;
+};

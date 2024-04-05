@@ -32,9 +32,9 @@ export const registerNewUserSchema = z.object({
 });
 
 export const authenticateUserSchema = z.object({
-  uuid: z.string({
-    required_error: 'UUID is required.',
-    invalid_type_error: 'UUID must be a text.',
+  identifier: z.string({
+    required_error: 'Email, username, phone_number is required.',
+    invalid_type_error: 'Email, username, phone_number must be a text.',
   }),
   password: z.string({
     required_error: 'Password is required.',
