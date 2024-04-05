@@ -113,3 +113,50 @@ export const validUserAndPassword = async (identifier: string, identifierType: s
 
   return user;
 };
+
+export const updateUser = async (userId: number, values: any) => {
+  const updatedUser = await databaseInstance.update(User).set(values).where(eq(User.id, userId)).returning();
+
+  return updatedUser[0];
+};
+
+export const updateUserMail = async (userId: number, email: any) => {
+  const existingUser = await findUser(email, 'email');
+  if (existingUser) throw new CustomError(409, 'Validation Error', `User with this email: ${email} already exists!`);
+
+  await databaseInstance.update(User).set({ email: email }).where(eq(User.id, userId)).returning();
+  return true;
+};
+
+export const updateUserUsername = async (userId: number, username: any) => {
+  const existingUser = await findUser(username, 'username');
+  if (existingUser) throw new CustomError(409, 'Validation Error', `User with this username: ${username} already exists!`);
+
+  await databaseInstance.update(User).set({ username: username }).where(eq(User.id, userId)).returning();
+  return true;
+};
+
+export const updateUserPassword = async (userId: number, oldPassword: string, newPassword: string) => {
+  const user = await findUser(userId.toString(), 'id');
+  const passwordMatch = user.encrypted_password ? bcrypt.compareSync(oldPassword, user.encrypted_password) : false;
+  if (!passwordMatch) throw new CustomError(401, 'Authentication Error', 'Old Password is incorrect!');
+
+  await databaseInstance
+    .update(User)
+    .set({ encrypted_password: bcrypt.hashSync(newPassword, 10) })
+    .where(eq(User.id, userId))
+    .returning();
+
+  return true;
+};
+
+export const updateUserStatus = async (userId: number, status: 'public' | 'private') => {
+  await databaseInstance.update(User).set({ status: status }).where(eq(User.id, userId)).returning();
+  return true;
+};
+
+export const updateUserProfilePicture = async (userId: number, profile_picture: string) => {
+  console.log(profile_picture);
+  await databaseInstance.update(User).set({ profile_picture: profile_picture }).where(eq(User.id, userId)).returning();
+  return true;
+};

@@ -1,5 +1,17 @@
 import { CustomError } from '../lib/error/custom.error';
-import { createUser, findUser, findUserViaProvider, generateUserToken, validUserAndPassword } from '../models/user.model';
+import {
+  createUser,
+  findUser,
+  findUserViaProvider,
+  generateUserToken,
+  updateUser,
+  updateUserMail,
+  updateUserPassword,
+  updateUserStatus,
+  updateUserUsername,
+  validUserAndPassword,
+  updateUserProfilePicture,
+} from '../models/user.model';
 
 export const createNewUser = async (display_name: string, email: string, password: string) => {
   const existingUser = await findUser(email, 'email');
@@ -24,4 +36,40 @@ export const findUserProvider = async (providerDetails: any) => {
   const userFromProvider = await findUserViaProvider(providerDetails);
   console.log(userFromProvider);
   return userFromProvider;
+};
+
+export const findUserById = async (userId: string) => {
+  const user = await findUser(userId, 'id');
+  return user;
+};
+
+export const updateUserInfo = async (userId: number, newValues: any) => {
+  const updatedUserInfo = await updateUser(userId, newValues);
+  return updatedUserInfo;
+};
+
+export const patchUserEmail = async (userId: number, newEmail: string) => {
+  const updatedUserWithEmail = await updateUserMail(userId, newEmail);
+  return updatedUserWithEmail;
+};
+
+export const patchUserPassword = async (userId: number, oldPassword: string, newPassword: string) => {
+  const updatedUserWithNewPassword = await updateUserPassword(userId, oldPassword, newPassword);
+  return updatedUserWithNewPassword;
+};
+
+export const patchUserUsername = async (userId: number, newUsername: string) => {
+  const updatedUserWithNewUsername = await updateUserUsername(userId, newUsername);
+  return updatedUserWithNewUsername;
+};
+
+export const patchUserStatus = async (userId: number, newStatus: 'public' | 'private') => {
+  const updatedUserWithNewStatus = await updateUserStatus(userId, newStatus);
+  return updatedUserWithNewStatus;
+};
+
+export const patchUserProfilePicture = async (userId: number, newProfilePicture: string) => {
+  console.log(newProfilePicture);
+  const updatedUserWithNewProfilePicture = await updateUserProfilePicture(userId, newProfilePicture);
+  return updatedUserWithNewProfilePicture;
 };

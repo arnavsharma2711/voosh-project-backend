@@ -1,20 +1,5 @@
 import { z } from 'zod';
-
-const passwordSchema = z
-  .string({
-    required_error: 'Password is required.',
-    invalid_type_error: 'Password must be a text.',
-  })
-  .refine((value) => value.length >= 8, {
-    message: 'Password must be at least 8 characters long.',
-  })
-  .refine((value) => /[A-Z]/.test(value), {
-    message: 'Password must contain at least one uppercase letter.',
-  })
-  // eslint-disable-next-line no-useless-escape
-  .refine((value) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value), {
-    message: 'Password must contain at least one special character.',
-  });
+import { passwordSchema } from './common.schema';
 
 export const registerNewUserSchema = z.object({
   display_name: z.string({
@@ -52,4 +37,5 @@ export const userInfoSchema = z.object({
   phone_number: z.string().optional().nullable(),
   profile_picture: z.string().optional().nullable(),
   bio: z.string().optional().nullable(),
+  status: z.union([z.literal('public'), z.literal('private')]),
 });
