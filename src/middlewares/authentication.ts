@@ -2,6 +2,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import { ACCESS_TOKEN_SECRET } from '../constants';
 import { controllerWrapper } from '../lib/controllerWrapper';
 import { findUserById } from '../services/user.service';
+import { CustomError } from '../lib/error/custom.error';
 
 export const authenticationMiddleware = controllerWrapper(async (req, res, next) => {
   const { accessToken } = req.cookies || {};
@@ -9,7 +10,7 @@ export const authenticationMiddleware = controllerWrapper(async (req, res, next)
   const access_token = accessToken || authorization.replace('Bearer ', '');
 
   if (!access_token) {
-    throw new Error('Invalid Access Token');
+    throw new CustomError(401, 'Invalid Access Token', 'Access Token is required!');
   }
 
   const decodedToken = jwt.verify(access_token, ACCESS_TOKEN_SECRET) as JwtPayload;
@@ -17,7 +18,7 @@ export const authenticationMiddleware = controllerWrapper(async (req, res, next)
 
   if (!userDetails) {
     res.sendStatus(401);
-    throw new Error('Invalid Access Token');
+    throw new CustomError(401, 'Invalid Access Token', 'Access Token is required!');
   }
 
   req.user = userDetails;
