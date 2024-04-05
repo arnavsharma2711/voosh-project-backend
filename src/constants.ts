@@ -6,3 +6,6 @@ export const GENERIC_ERROR_MESSAGE = 'Something went wrong, please try again lat
 export const APPLICATION_ENVIRONMENT = process.env.NODE_ENV || 'development';
 export const PORT = process.env.PORT || 5000;
 export const DATABASE_URL = process.env.DATABASE_URL || '';
+export const COOKIE_SETTINGS = { httpOnly: true, secure: true };
+export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || 'access_token_secret_key';
+export const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || 'refresh_token_secret_key';
