@@ -2,6 +2,7 @@ import { serial, pgTable, text, timestamp, varchar, pgEnum, uniqueIndex } from '
 
 //Enums
 export const userStatus = pgEnum('user-status', ['public', 'private']);
+export const userRolesEnum = pgEnum('user-roles', ['admin', 'user']);
 
 // Schemas
 
@@ -49,6 +50,24 @@ export const userProvider = pgTable(
   (user_provider) => {
     return {
       providerIndx: uniqueIndex('user_providers_idx').on(user_provider.provider, user_provider.provider_id),
+    };
+  },
+);
+
+export const userRoles = pgTable(
+  'user_roles',
+  {
+    id: serial('id').notNull().primaryKey(),
+    user_id: serial('user_id')
+      .notNull()
+      .references(() => users.id),
+    role: userRolesEnum('role').default('user'),
+    created_at: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
+    updated_at: timestamp('updated_at', { mode: 'date' }).notNull().defaultNow(),
+  },
+  (user_roles) => {
+    return {
+      userIdIndex: uniqueIndex('user_roles_user_id_idx').on(user_roles.user_id),
     };
   },
 );
