@@ -1,5 +1,5 @@
 import { CustomError } from '../lib/error/custom.error';
-import { createUser, findUser, generateUserToken, validUserAndPassword } from '../models/user.model';
+import { createUser, findUser, findUserViaProvider, generateUserToken, validUserAndPassword } from '../models/user.model';
 
 export const createNewUser = async (display_name: string, email: string, password: string) => {
   const existingUser = await findUser(email, 'email');
@@ -18,4 +18,10 @@ export const validateUserCredentials = async (userIdentifier: string, identifier
   const { access_token, refresh_token } = await generateUserToken(validatedUser);
 
   return { access_token, refresh_token, userDetails: validatedUser };
+};
+
+export const findUserProvider = async (providerDetails: any) => {
+  const userFromProvider = await findUserViaProvider(providerDetails);
+  console.log(userFromProvider);
+  return userFromProvider;
 };

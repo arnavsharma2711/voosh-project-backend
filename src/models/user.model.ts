@@ -1,5 +1,5 @@
-import { eq, or } from 'drizzle-orm';
-import { users as User } from '../lib/db/schema';
+import { and, eq, or } from 'drizzle-orm';
+import { users as User, userProvider } from '../lib/db/schema';
 import databaseInstance from '../lib/db';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -36,6 +36,25 @@ export const findUser = async (identifierValue: string, identifierType: string) 
   return userDetails[0];
 };
 
+export const findUserViaProvider = async (provider: any) => {
+  console.log(provider);
+  const userViaProvider = await databaseInstance
+    .select()
+    .from(userProvider)
+    .leftJoin(User, eq(userProvider.user_id, User.id))
+    .where(and(eq(userProvider.provider, provider.provider), eq(userProvider.provider_id, provider.id)))
+    .limit(1);
+
+  let user;
+  if (userViaProvider.length === 0) {
+    user = await createUserViaProvider(provider.provider, provider.id, provider.displayName, provider.email, provider.picture);
+  } else {
+    user = userViaProvider[0].users;
+  }
+
+  return user;
+};
+
 export const createUser = async (display_name: string, email: string, password: string) => {
   const values = {
     display_name: display_name,
@@ -50,6 +69,38 @@ export const createUser = async (display_name: string, email: string, password: 
     .returning({ id: User.id, display_name: User.display_name, email: User.email, username: User.username });
 
   return newUser[0];
+};
+
+export const createUserViaProvider = async (
+  provider_type: string,
+  provider_id: string,
+  display_name: string,
+  email: string,
+  profile_picture: string,
+) => {
+  const values = {
+    display_name: display_name,
+    email: email,
+    username: generateDefaultUsername(display_name),
+    profile_picture: profile_picture,
+  };
+
+  const newUser = databaseInstance.transaction(async (trx) => {
+    const createdUser = await trx
+      .insert(User)
+      .values(values)
+      .returning({ id: User.id, display_name: User.display_name, email: User.email, username: User.username, profile_picture: User.profile_picture });
+
+    if (createdUser.length === 0) {
+      await trx.rollback();
+      throw new CustomError(500, 'Model Error', 'User creation failed!');
+    } else {
+      await trx.insert(userProvider).values({ user_id: createdUser[0].id, provider: provider_type, provider_id: provider_id });
+    }
+
+    return createdUser[0];
+  });
+  return newUser;
 };
 
 export const validUserAndPassword = async (identifier: string, identifierType: string, password: string) => {

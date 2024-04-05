@@ -33,3 +33,22 @@ export const users = pgTable(
     };
   },
 );
+
+export const userProvider = pgTable(
+  'user_provider',
+  {
+    id: serial('id').notNull().primaryKey(),
+    user_id: serial('user_id')
+      .notNull()
+      .references(() => users.id),
+    provider: varchar('provider', { length: 255 }).notNull(),
+    provider_id: varchar('provider_id', { length: 255 }).notNull(),
+    created_at: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
+    updated_at: timestamp('updated_at', { mode: 'date' }).notNull().defaultNow(),
+  },
+  (user_provider) => {
+    return {
+      providerIndx: uniqueIndex('user_providers_idx').on(user_provider.provider, user_provider.provider_id),
+    };
+  },
+);

@@ -40,3 +40,8 @@ export const logoutUser = controllerWrapper(async (_req, res) => {
     .clearCookie('refreshToken', COOKIE_SETTINGS)
     .json(build_response(true, 'User logged out successfully!', null, null));
 });
+
+//GET /api/v1/auth/login-failure
+export const loginFailure = controllerWrapper(async (_req, res) => {
+  res.status(401).json(build_response(false, 'User login failed!', null, null));
+});
