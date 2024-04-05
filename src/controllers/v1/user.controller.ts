@@ -89,6 +89,7 @@ export const updateUserStatus = controllerWrapper(async (req, res) => {
   res.status(200).json(build_response(true, 'Status updated successfully!'));
 });
 
+//PATCH /api/v1/user/profile-picture
 export const updateUserProfilePicture = controllerWrapper(async (req, res) => {
   console.log(req.file);
   if (req.file) await patchUserProfilePicture(req.user.id, req.file.path);
