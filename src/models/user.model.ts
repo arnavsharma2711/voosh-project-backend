@@ -47,7 +47,8 @@ export const findUserViaProvider = async (provider: any) => {
 
   let user;
   if (userViaProvider.length === 0) {
-    user = await createUserViaProvider(provider.provider, provider.id, provider.displayName, provider.email, provider.picture);
+    const picture = provider.picture || provider.photos[0].value || '';
+    user = await createUserViaProvider(provider.provider, provider.id, provider.displayName, provider.email, picture);
   } else {
     user = userViaProvider[0].users;
   }
@@ -80,7 +81,7 @@ export const createUserViaProvider = async (
 ) => {
   const values = {
     display_name: display_name,
-    email: email,
+    email: email || `${provider_id}@${provider_type}.com`,
     username: generateDefaultUsername(display_name),
     profile_picture: profile_picture,
   };
