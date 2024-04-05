@@ -8,8 +8,12 @@
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
+    "database": "docker compose -f docker-compose.yaml up",
     "lint": "eslint src/**/*.ts --fix",
     "test": "jest",
+    "migration:generate": "drizzle-kit generate:pg",
+    "migration:push": "node -r esbuild-register src/lib/db/migrate.ts",
+    "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit",
     "vercel-build": "echo 'vercel-build'"
   },
@@ -18,9 +22,12 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.30.7",
     "express": "^4.18.3",
     "helmet": "^7.1.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pg": "^8.11.5",
+    "postgres": "^3.4.4"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.7",
@@ -33,6 +40,7 @@
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
+    "drizzle-kit": "^0.20.14",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
