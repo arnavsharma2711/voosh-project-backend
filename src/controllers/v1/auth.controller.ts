@@ -31,3 +31,12 @@ export const loginUser = controllerWrapper(async (req, res) => {
     .cookie('refreshToken', refresh_token, COOKIE_SETTINGS)
     .json(build_response(true, 'User logged in successfully!', null, userInfo));
 });
+
+//GET /api/v1/auth/logout
+export const logoutUser = controllerWrapper(async (_req, res) => {
+  res
+    .status(200)
+    .clearCookie('accessToken', COOKIE_SETTINGS)
+    .clearCookie('refreshToken', COOKIE_SETTINGS)
+    .json(build_response(true, 'User logged out successfully!', null, null));
+});
