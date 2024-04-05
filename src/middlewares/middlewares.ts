@@ -4,7 +4,7 @@ import { APPLICATION_ENVIRONMENT, GENERIC_ERROR_MESSAGE, NOT_FOUND_MESSAGE } fro
 
 export function handleNotFound(req: Request, res: Response, next: NextFunction) {
   res.status(404);
-  next(new Error(`Not Found - ${req.originalUrl}`));
+  next(new Error(` Not Found - ${req.method} ${req.originalUrl}`));
 }
 
 export function handleError(err: Error, _req: Request, res: Response<ErrorResponseInterface>, next: NextFunction) {
