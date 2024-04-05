@@ -11,6 +11,7 @@ import {
   updateUserUsername,
   validUserAndPassword,
   updateUserProfilePicture,
+  userRole,
 } from '../models/user.model';
 
 export const createNewUser = async (display_name: string, email: string, password: string) => {
@@ -72,4 +73,9 @@ export const patchUserProfilePicture = async (userId: number, newProfilePicture:
   console.log(newProfilePicture);
   const updatedUserWithNewProfilePicture = await updateUserProfilePicture(userId, newProfilePicture);
   return updatedUserWithNewProfilePicture;
+};
+
+export const getUserRole = async (userId: number) => {
+  const role = await userRole(userId);
+  return role;
 };
