@@ -5,6 +5,16 @@ This is a project submission for Voosh. It's an API built with Node.js and Expre
 ## API Contract (Postman)
 
 [API Contract](https://api.postman.com/collections/18687727-16b0c636-121b-4cdf-a86e-4ec38e61d24f?access_key=PMAT-01HTRZ91GBM3SYHHH0PETWNDXH)
+The project employs JWT authentication to authenticate users. This authentication process is facilitated through middleware, which is invoked for all APIs within the user namespace. Upon user login and registration, JWT tokens are generated and stored in the user's cookies for verification purposes. 
+JWT token is also user for admin authentication.
+
+Admin Crediacials
+```
+{
+  "identifier": "arnavsharma27111@gmail.com",
+  "password": "Arnav@27"
+}
+```
 
 ## Project Structure
 
