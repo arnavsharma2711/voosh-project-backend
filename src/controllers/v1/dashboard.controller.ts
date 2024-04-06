@@ -5,8 +5,6 @@ import { getAllPublicUsers, getAllUsers } from '../../services/dashboard.service
 
 export const userList = controllerWrapper(async (req, res) => {
   const { limit, offset } = req.query;
-  console.log(req.role);
-  console.log(req.user);
   let userList;
   if (req.role === 'admin') {
     userList = await getAllUsers(parseInt(limit as string), parseInt(offset as string));

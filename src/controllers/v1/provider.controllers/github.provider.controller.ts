@@ -41,10 +41,8 @@ export const githubAuthCallback = controllerWrapper(async (req, res, next) => {
     if (!user) {
       return res.redirect('/api/v1/auth/login-failure');
     }
-    console.log(user);
     const { access_token, refresh_token } = await generateUserToken(user);
     const userInfo = userInfoSchema.parse(user);
-    console.log(userInfo);
     res
       .status(200)
       .cookie('accessToken', access_token, COOKIE_SETTINGS)

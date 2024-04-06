@@ -13,7 +13,7 @@ export const registerNewUser = controllerWrapper(async (req, res) => {
 
   const userInfo = userInfoSchema.parse(userDetails);
   res
-    .status(200)
+    .status(201)
     .cookie('accessToken', access_token, COOKIE_SETTINGS)
     .cookie('refreshToken', refresh_token, COOKIE_SETTINGS)
     .json(build_response(true, 'User data created successfully!', null, userInfo));
@@ -36,7 +36,7 @@ export const loginUser = controllerWrapper(async (req, res) => {
 //GET /api/v1/auth/logout
 export const logoutUser = controllerWrapper(async (_req, res) => {
   res
-    .status(200)
+    .status(204)
     .clearCookie('accessToken', COOKIE_SETTINGS)
     .clearCookie('refreshToken', COOKIE_SETTINGS)
     .json(build_response(true, 'User logged out successfully!', null, null));
@@ -44,5 +44,5 @@ export const logoutUser = controllerWrapper(async (_req, res) => {
 
 //GET /api/v1/auth/login-failure
 export const loginFailure = controllerWrapper(async (_req, res) => {
-  res.status(401).json(build_response(false, 'User login failed!', null, null));
+  res.status(403).json(build_response(false, 'User login failed!', null, null));
 });

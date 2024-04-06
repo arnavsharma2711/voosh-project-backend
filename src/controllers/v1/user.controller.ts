@@ -38,7 +38,7 @@ export const updateUserDetails = controllerWrapper(async (req, res) => {
   const userDetails = await updateUserInfo(user.id, values);
 
   const userInfo = userInfoSchema.parse(userDetails);
-  res.status(200).json(build_response(true, 'User data updated successfully!', null, userInfo));
+  res.status(204).json(build_response(true, 'User data updated successfully!', null, userInfo));
 });
 
 //PATCH /api/v1/user/password
@@ -50,7 +50,7 @@ export const updateUserPassword = controllerWrapper(async (req, res) => {
 
   if (!passwordUpdated) throw new CustomError(400, 'Validation Error', 'Password update failed!');
 
-  res.status(200).json(build_response(true, 'Password updated successfully!'));
+  res.status(204).json(build_response(true, 'Password updated successfully!'));
 });
 
 //PATCH /api/v1/user/email
@@ -62,7 +62,7 @@ export const updateUserEmail = controllerWrapper(async (req, res) => {
 
   if (!emailUpdated) throw new CustomError(400, 'Validation Error', 'Email update failed!');
 
-  res.status(200).json(build_response(true, 'Email updated successfully!'));
+  res.status(204).json(build_response(true, 'Email updated successfully!'));
 });
 
 //PATCH /api/v1/user/username
@@ -74,7 +74,7 @@ export const updateUserUsername = controllerWrapper(async (req, res) => {
 
   if (!usernameUpdated) throw new CustomError(400, 'Validation Error', 'Username update failed!');
 
-  res.status(200).json(build_response(true, 'Username updated successfully!'));
+  res.status(204).json(build_response(true, 'Username updated successfully!'));
 });
 
 //PATCH /api/v1/user/status
@@ -86,12 +86,11 @@ export const updateUserStatus = controllerWrapper(async (req, res) => {
 
   if (!statusUpdated) throw new CustomError(400, 'Validation Error', 'Status update failed!');
 
-  res.status(200).json(build_response(true, 'Status updated successfully!'));
+  res.status(204).json(build_response(true, 'Status updated successfully!'));
 });
 
 //PATCH /api/v1/user/profile-picture
 export const updateUserProfilePicture = controllerWrapper(async (req, res) => {
-  console.log(req.file);
   if (req.file) await patchUserProfilePicture(req.user.id, req.file.path);
-  res.status(200).json(build_response(true, 'Profile picture updated successfully!'));
+  res.status(204).json(build_response(true, 'Profile picture updated successfully!'));
 });
