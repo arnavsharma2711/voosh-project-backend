@@ -35,7 +35,6 @@ export const validateUserCredentials = async (userIdentifier: string, identifier
 
 export const findUserProvider = async (providerDetails: any) => {
   const userFromProvider = await findUserViaProvider(providerDetails);
-  console.log(userFromProvider);
   return userFromProvider;
 };
 
@@ -70,7 +69,6 @@ export const patchUserStatus = async (userId: number, newStatus: 'public' | 'pri
 };
 
 export const patchUserProfilePicture = async (userId: number, newProfilePicture: string) => {
-  console.log(newProfilePicture);
   const updatedUserWithNewProfilePicture = await updateUserProfilePicture(userId, newProfilePicture);
   return updatedUserWithNewProfilePicture;
 };

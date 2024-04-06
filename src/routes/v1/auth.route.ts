@@ -83,11 +83,11 @@ authRouter.post('/register', registerNewUser);
  *               identifier:
  *                 type: string
  *                 description: The email of the user.
- *                 example: "email@gmail.com"
+ *                 example: example1@gmail.com
  *               password:
  *                 type: string
  *                 description: The password of the user.
- *                 example: "Arnav@27"
+ *                 example: Deafult@117
  *     responses:
  *       200:
  *         description: User logged in successfully.
