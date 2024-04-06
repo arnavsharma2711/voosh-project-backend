@@ -2,6 +2,10 @@
 
 This is a project submission for Voosh. It's an API built with Node.js and Express, providing enhanced authentication features.
 
+## API Contract (Postman)
+
+[API Contract](https://api.postman.com/collections/18687727-16b0c636-121b-4cdf-a86e-4ec38e61d24f?access_key=PMAT-01HTRZ91GBM3SYHHH0PETWNDXH)
+
 ## Project Structure
 
 The project is structured as follows:
