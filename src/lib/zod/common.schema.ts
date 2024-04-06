@@ -26,4 +26,5 @@ export const userInfoSchema = z.object({
   phone_number: z.string().optional().nullable(),
   profile_picture: z.string().optional().nullable(),
   bio: z.string().optional().nullable(),
+  status: z.string().optional().nullable(),
 });
